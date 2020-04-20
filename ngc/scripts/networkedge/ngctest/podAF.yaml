@@ -26,9 +26,9 @@ spec:
     args: [ "./entrypoint.sh" ]
     resources:
       requests:
-        memory: 1Gi
+        memory: 512Mi
       limits:
-        memory: 1Gi
+        memory: 512Mi
     ports:
     - containerPort: 8050
       name: cnca
@@ -67,6 +67,7 @@ spec:
     name: cnca
   - port: 8051
     targetPort: 8051
+    nodePort: 30051
     protocol: TCP
     name: nef
   selector:

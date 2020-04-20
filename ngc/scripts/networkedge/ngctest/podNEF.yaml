@@ -26,9 +26,9 @@ spec:
     args: [ "./entrypoint.sh" ]
     resources:
       requests:
-        memory: 1Gi
+        memory: 512Mi
       limits:
-        memory: 1Gi
+        memory: 512Mi
     ports:
     - containerPort: 8060
     volumeMounts:
@@ -58,6 +58,7 @@ spec:
   ports:
   - port: 8060
     targetPort: 8060
+    nodePort: 30060
     protocol: TCP
     name: af
   selector:
