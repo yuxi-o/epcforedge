@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	logger "github.com/open-ness/common/log"
-	"github.com/open-ness/epcforedge/ngc/pkg/af"
+	"epcforedge/ngc/pkg/af"
 )
 
 var log = logger.DefaultLogger.WithField("main", nil)

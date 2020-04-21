@@ -1,4 +1,4 @@
-module github.com/open-ness/epcforedge
+module epcforedge
 
 go 1.12
 
