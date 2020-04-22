@@ -304,3 +304,50 @@ func errRspHeader(w *http.ResponseWriter, method string,
 	(*w).WriteHeader(statusCode)
 
 }
+
+func updateQoSURL(cfg Config, r *http.Request, resURL string) string {
+
+	res := strings.Split(resURL, "subscriptions")
+
+	var afURL string
+	if HTTP2Enabled == true {
+		afURL = "https" + "://" + cfg.SrvCfg.Hostname +
+			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
+			"subscriptions" + res[1]
+	} else {
+		afURL = "http" + "://" + cfg.SrvCfg.Hostname +
+			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQos +
+			"subscriptions" + res[1]
+	}
+	return afURL
+}
+
+func updateQoSSelfLink(cfg Config, r *http.Request,
+	qsResp AsSessionWithQoSSub) (string, error) {
+
+	nefSelf := qsResp.Self
+
+	if nefSelf == "" {
+		return "", errors.New("NEF QoS Self Link Not Present")
+	}
+
+	return updateQoSURL(cfg, r, string(nefSelf)), nil
+/*
+	res := strings.Split(string(nefSelf), "subscriptions")
+
+	var afSelf string
+
+	if HTTP2Enabled == true {
+
+		afSelf = "https" + "://" + cfg.SrvCfg.Hostname +
+			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
+			"subscriptions" + res[1]
+	} else {
+
+		afSelf = "http" + "://" + cfg.SrvCfg.Hostname +
+			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
+			"subscriptions" + res[1]
+	}
+	return afSelf, nil
+*/
+}

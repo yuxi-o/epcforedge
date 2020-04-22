@@ -1,6 +1,7 @@
 {
     "AfId": "1",
     "LocationPrefixPfd": "/af/v1/pfd/",
+    "LocationPrefixQoS": "/af/v1/qos/",
     "ServerConfig": {
         "CNCAEndpoint": ":8050",
         "Hostname": "localhost",
@@ -15,6 +16,7 @@
         "NEFPort": ":8060",
         "NEFBasePath": "/3gpp-traffic-influence/v1",
         "NEFPFDBasePath": "/3gpp-pfd-management/v1",
+        "NEFQoSBasePath": "/3gpp-as-session-with-qos/v1",
         "UserAgent": "NGC-AF",
         "NEFCliCertPath": "/etc/certs/root-ca-cert.pem",
         "OAuth2Support": true

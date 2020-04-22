@@ -46,6 +46,7 @@ type Config struct {
 	AfID              string       `json:"AfId"`
 	AfAPIRoot         string       `json:"AfAPIRoot"`
 	LocationPrefixPfd string       `json:"LocationPrefixPfd"`
+	LocationPrefixQoS string       `json:"LocationPrefixQoS"`
 	SrvCfg            ServerConfig `json:"ServerConfig"`
 	CliCfg            CliConfig    `json:"CliConfig"`
 }
@@ -171,6 +172,7 @@ func printConfig(cfg Config) {
 	log.Infoln("********************* NGC AF CONFIGURATION ******************")
 	log.Infoln("AfID: ", cfg.AfID)
 	log.Infoln("LocationPrefixPfd ", cfg.LocationPrefixPfd)
+	log.Infoln("LocationPrefixQoS ", cfg.LocationPrefixQoS)
 	log.Infoln("-------------------------- CNCA SERVER ----------------------")
 	log.Infoln("CNCAEndpoint: ", cfg.SrvCfg.CNCAEndpoint)
 	log.Infoln("-------------------- NEF NOTIFICATIONS SERVER ---------------")
@@ -184,6 +186,7 @@ func printConfig(cfg Config) {
 	log.Infoln("NEFPort: ", cfg.CliCfg.NEFPort)
 	log.Infoln("NEFBasePath: ", cfg.CliCfg.NEFBasePath)
 	log.Infoln("NEFPFDBasePath: ", cfg.CliCfg.NEFPFDBasePath)
+	log.Infoln("NEFQoSBasePath: ", cfg.CliCfg.NEFQoSBasePath)
 	log.Infoln("UserAgent: ", cfg.CliCfg.UserAgent)
 	log.Infoln("NEFCliCertPath: ", cfg.CliCfg.NEFCliCertPath)
 	log.Infoln("OAuth2Support: ", cfg.CliCfg.OAuth2Support)

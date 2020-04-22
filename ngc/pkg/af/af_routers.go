@@ -196,4 +196,47 @@ var afRoutes = Routes{
 		"/af/v1/pfd/transactions/{transactionId}/applications/{appId}",
 		PatchPfdAppTransaction,
 	},
+
+	// AsSessionWithQoS
+	Route{
+		"GetAllQoSSubscriptions",
+		strings.ToUpper("Get"),
+		"/af/v1/qos/subscriptions",
+		GetAllQoSSubscriptions,
+	},
+
+	Route{
+		"CreateQoSSubscription",
+		strings.ToUpper("Post"),
+		"/af/v1/qos/subscriptions",
+		CreateQoSSubscription,
+	},
+
+	Route{
+		"GetQoSSubscription",
+		strings.ToUpper("Get"),
+		"/af/v1/qos/subscriptions/{subscriptionId}",
+		GetQoSSubscription,
+	},
+
+	Route{
+		"DeleteQoSSubscription",
+		strings.ToUpper("Delete"),
+		"/af/v1/qos/subscriptions/{subscriptionId}",
+		DeleteQoSSubscription,
+	},
+
+	Route{
+		"QoSSubscriptionPatch",
+		strings.ToUpper("Patch"),
+		"/af/v1/qos/subscriptions/{subscriptionId}",
+		ModifyQoSSubscriptionPatch,
+	},
+
+	Route{
+		"QoSSubscriptionPut",
+		strings.ToUpper("Put"),
+		"/af/v1/qos/subscriptions/{subscriptionId}",
+		ModifyQoSSubscriptionPut,
+	},
 }

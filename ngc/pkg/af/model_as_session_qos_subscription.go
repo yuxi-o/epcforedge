@@ -1,3 +1,4 @@
+// CertusNet Copyright  
 package af
 
 // AsSessionWithQoSSub is  As Session with Qos Subscription structure

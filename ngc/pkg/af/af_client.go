@@ -50,6 +50,13 @@ type Client struct {
 	PfdManagementAppDeleteAPI *PfdManagementTransactionAppDeleteAPIService
 	PfdManagementAppPutAPI    *PfdManagementTransactionAppPutAPIService
 	PfdManagementAppPatchAPI  *PfdManagementTransactionAppPatchAPIService
+	QoSSubGetAllAPI  *QoSSubscriptionGetAllAPIService
+	QoSSubDeleteAPI  *QoSSubscriptionDeleteAPIService
+	QoSSubGetAPI     *QoSSubscriptionGetAPIService
+	QoSSubPatchAPI   *QoSSubscriptionPatchAPIService
+	QoSSubPostAPI    *QoSSubscriptionPostAPIService
+	QoSSubPutAPI     *QoSSubscriptionPutAPIService
+
 }
 
 type service struct {
@@ -132,6 +139,18 @@ func NewClient(cfg *CliConfig) *Client {
 		(*PfdManagementTransactionAppPutAPIService)(&c.common)
 	c.PfdManagementAppPatchAPI =
 		(*PfdManagementTransactionAppPatchAPIService)(&c.common)
+	c.QoSSubGetAllAPI =
+		(*QoSSubscriptionGetAllAPIService)(&c.common)
+	c.QoSSubDeleteAPI =
+		(*QoSSubscriptionDeleteAPIService)(&c.common)
+	c.QoSSubGetAPI =
+		(*QoSSubscriptionGetAPIService)(&c.common)
+	c.QoSSubPatchAPI =
+		(*QoSSubscriptionPatchAPIService)(&c.common)
+	c.QoSSubPostAPI =
+		(*QoSSubscriptionPostAPIService)(&c.common)
+	c.QoSSubPutAPI =
+		(*QoSSubscriptionPutAPIService)(&c.common)
 
 	return c
 }
