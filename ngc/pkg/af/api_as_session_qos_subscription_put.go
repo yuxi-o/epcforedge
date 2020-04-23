@@ -16,14 +16,14 @@ var (
 	_ context.Context
 )
 
-// QoSSubscriptionPostAPIService type
-type QoSSubscriptionPostAPIService service
+//QoSSubscriptionPutAPIService type
+type QoSSubscriptionPutAPIService service
 
-func (a *QoSSubscriptionPostAPIService) handleQoSPostResponse(
+func (a *QoSSubscriptionPutAPIService) handleQoSPutResponse(
 	qs *AsSessionWithQoSSub, r *http.Response,
 	body []byte) error {
 
-	if r.StatusCode == 201 {
+	if r.StatusCode == 200 {
 
 		err := json.Unmarshal(body, qs)
 		if err != nil {
@@ -33,32 +33,34 @@ func (a *QoSSubscriptionPostAPIService) handleQoSPostResponse(
 	}
 
 	return handlePostPutPatchErrorResp(r, body)
+
 }
 
 /*
-SubscriptionPost Creates a new subscription resource
-Creates a new subscription resource
+QoSSubscriptionPut Replaces an existing
+subscription resource
+Replaces an existing subscription resource
  * @param ctx context.Context - for authentication, logging, cancellation,
  * deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param afID Identifier of the AF
- * @param body Request to create a new subscription resource
-
-@return AsSessionWithQoSSub
+ * @param subscriptionID Identifier of the subscription resource
+ * @param body Parameters to replace the existing subscription
+@return AsSessionWithQoSSub, *http.Response, error
 */
-func (a *QoSSubscriptionPostAPIService) QoSSubscriptionPost(
-	ctx context.Context, afID string, body AsSessionWithQoSSub) (AsSessionWithQoSSub,
-	*http.Response, error) {
+func (a *QoSSubscriptionPutAPIService) QoSSubscriptionPut(
+	ctx context.Context, afID string, subscriptionID string,
+	body AsSessionWithQoSSub) (AsSessionWithQoSSub, *http.Response, error) {
 
 	var (
-		method   = strings.ToUpper("Post")
-		postBody interface{}
-		ret      AsSessionWithQoSSub
+		method  = strings.ToUpper("Put")
+		putBody interface{}
+		ret     AsSessionWithQoSSub
 	)
 
 	// create path and map variables
 	path := a.client.cfg.Protocol + "://" + a.client.cfg.NEFHostname +
 		a.client.cfg.NEFPort + a.client.cfg.NEFQoSBasePath + "/" + afID +
-		"/subscriptions"
+		"/subscriptions/" + subscriptionID 
 
 	headerParams := make(map[string]string)
 
@@ -66,9 +68,10 @@ func (a *QoSSubscriptionPostAPIService) QoSSubscriptionPost(
 	headerParams["Accept"] = contentType
 
 	// body params
-	postBody = &body
-	r, err := a.client.prepareRequest(ctx, path, method,
-		postBody, headerParams)
+	putBody = &body
+	r, err := a.client.prepareRequest(ctx, path,
+		method, putBody, headerParams)
+
 	if err != nil {
 		return ret, nil, err
 	}
@@ -91,11 +94,10 @@ func (a *QoSSubscriptionPostAPIService) QoSSubscriptionPost(
 		return ret, resp, err
 	}
 
-	if err = a.handleQoSPostResponse(&ret, resp,
+	if err = a.handleQoSPutResponse(&ret, resp,
 		respBody); err != nil {
-		log.Errf("Handle Post response")
+		log.Errf("Handle Put response")
 		return ret, resp, err
 	}
-
 	return ret, resp, nil
 }

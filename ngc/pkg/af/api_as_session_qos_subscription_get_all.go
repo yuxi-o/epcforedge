@@ -19,7 +19,7 @@ var (
 // QoSSubscriptionGetAllAPIService type
 type QoSSubscriptionGetAllAPIService service
 
-func (a *QoSSubscriptionGetAllAPIService) handleGetAllResponse(
+func (a *QoSSubscriptionGetAllAPIService) handleQoSGetAllResponse(
 	ts *[]AsSessionWithQoSSub, r *http.Response, body []byte) error {
 
 	if r.StatusCode == 200 {
@@ -87,7 +87,7 @@ func (a *QoSSubscriptionGetAllAPIService) QoSSubscriptionsGetAll(
 		return ret, resp, err
 	}
 
-	if err = a.handleGetAllResponse(&ret, resp,
+	if err = a.handleQoSGetAllResponse(&ret, resp,
 		respBody); err != nil {
 		return ret, resp, err
 	}

@@ -34,8 +34,6 @@ func CreateQoSSubscription(w http.ResponseWriter, r *http.Request) {
 		qsResp			AsSessionWithQoSSub
 		resp           *http.Response
 		url            *url.URL
-		subscriptionID string
-		transID        int
 	)
 
 	afCtx := r.Context().Value(keyType("af-ctx")).(*Context)

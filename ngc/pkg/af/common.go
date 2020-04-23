@@ -305,6 +305,12 @@ func errRspHeader(w *http.ResponseWriter, method string,
 
 }
 
+func getQoSSubsIDFromURL(u *http.Request) string {
+	vars := mux.Vars(u)
+	sID := vars["subscriptionId"]
+	return sID
+}
+
 func updateQoSURL(cfg Config, r *http.Request, resURL string) string {
 
 	res := strings.Split(resURL, "subscriptions")
