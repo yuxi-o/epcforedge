@@ -338,22 +338,4 @@ func updateQoSSelfLink(cfg Config, r *http.Request,
 	}
 
 	return updateQoSURL(cfg, r, string(nefSelf)), nil
-/*
-	res := strings.Split(string(nefSelf), "subscriptions")
-
-	var afSelf string
-
-	if HTTP2Enabled == true {
-
-		afSelf = "https" + "://" + cfg.SrvCfg.Hostname +
-			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
-			"subscriptions" + res[1]
-	} else {
-
-		afSelf = "http" + "://" + cfg.SrvCfg.Hostname +
-			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
-			"subscriptions" + res[1]
-	}
-	return afSelf, nil
-*/
 }

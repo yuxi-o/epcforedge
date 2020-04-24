@@ -56,6 +56,14 @@ func GetQoSSubscription(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Updating the location url and Self Link in AF
+	self, err := updateQoSSelfLink(afCtx.cfg, r, qsResp)
+	if err != nil {
+		errRspHeader(&w, "GET", err.Error(), http.StatusInternalServerError)
+		return
+	}
+	qsResp.Self = Link(self)
+
 	qsRespJSON, err = json.Marshal(qsResp)
 	if err != nil {
 		log.Errf("AsSessionWithQoS Subscription get : %s", err.Error())

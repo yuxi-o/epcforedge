@@ -66,7 +66,7 @@ func CreateQoSSubscription(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Updating the location url, Self Link and Application Self Link in AF
+	// Updating the location url and Self Link in AF
 	afURL := updateQoSURL(afCtx.cfg, r, url.String())
 
 	self, err := updateQoSSelfLink(afCtx.cfg, r, qsResp)

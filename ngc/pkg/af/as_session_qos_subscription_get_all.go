@@ -55,6 +55,18 @@ func GetAllQoSSubscriptions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Updating the Self Link in AF
+	for key, v := range tsResp{
+		var self string
+		self, err = updateQoSSelfLink(afCtx.cfg, r, v)
+		if err != nil {
+			errRspHeader(&w, "GET ALL", err.Error(), http.StatusInternalServerError)
+			return
+		}
+		v.Self = Link(self)
+		tsResp[key] = v
+	}
+
 	tsRespJSON, err = json.Marshal(tsResp)
 	if err != nil {
 		log.Errf("AsSessionWithQoS Subscriptions get all: %s", err.Error())
