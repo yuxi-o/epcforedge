@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"strconv"
 )
 
 func modifyQoSSubscriptionByPut(cliCtx context.Context, qs AsSessionWithQoSSub,
@@ -33,7 +32,7 @@ func ModifyQoSSubscriptionPut(w http.ResponseWriter, r *http.Request) {
 		qsResp  AsSessionWithQoSSub
 		resp    *http.Response
 		sID     string
-		transID int
+		qsRespJSON      []byte
 	)
 
 	afCtx := r.Context().Value(keyType("af-ctx")).(*Context)
@@ -56,7 +55,7 @@ func ModifyQoSSubscriptionPut(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sID = getQoSSubsIDFromURL(r)
-	qsResp, resp, err = modifySubscriptionByPut(cliCtx, ts, afCtx, sID)
+	qsResp, resp, err = modifyQoSSubscriptionByPut(cliCtx, qs, afCtx, sID)
 	if err != nil {
 		log.Errf("AsSessionWithQos Subscription modify : %s", err.Error())
 		w.WriteHeader(getStatusCode(resp))

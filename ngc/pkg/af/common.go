@@ -322,7 +322,7 @@ func updateQoSURL(cfg Config, r *http.Request, resURL string) string {
 			"subscriptions" + res[1]
 	} else {
 		afURL = "http" + "://" + cfg.SrvCfg.Hostname +
-			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQos +
+			cfg.SrvCfg.CNCAEndpoint + cfg.LocationPrefixQoS +
 			"subscriptions" + res[1]
 	}
 	return afURL

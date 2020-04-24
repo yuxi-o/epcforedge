@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"strconv"
 )
 
 func createQoSSubscription(cliCtx context.Context, qs AsSessionWithQoSSub,
@@ -34,6 +33,7 @@ func CreateQoSSubscription(w http.ResponseWriter, r *http.Request) {
 		qsResp			AsSessionWithQoSSub
 		resp           *http.Response
 		url            *url.URL
+		qsRespJSON      []byte
 	)
 
 	afCtx := r.Context().Value(keyType("af-ctx")).(*Context)

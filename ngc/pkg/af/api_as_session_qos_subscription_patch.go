@@ -5,7 +5,6 @@ package af
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -56,7 +55,7 @@ func (a *QoSSubscriptionPatchAPIService) QoSSubscriptionPatch(
 	var (
 		method    = strings.ToUpper("Patch")
 		patchBody interface{}
-		ret       TrafficInfluSub
+		ret       AsSessionWithQoSSub
 	)
 
 	// create path and map variables

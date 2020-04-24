@@ -5,7 +5,6 @@ package af
 import (
 	"context"
 	"net/http"
-	"strconv"
 )
 
 func deleteQoSSubscription(cliCtx context.Context, afCtx *Context,

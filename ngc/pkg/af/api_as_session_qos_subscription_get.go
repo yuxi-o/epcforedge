@@ -5,7 +5,6 @@ package af
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -20,7 +19,7 @@ var (
 type QoSSubscriptionGetAPIService service
 
 func (a *QoSSubscriptionGetAPIService) handleQoSGetResponse(
-	qs *AsSessionWithSub, r *http.Response,
+	qs *AsSessionWithQoSSub, r *http.Response,
 	body []byte) error {
 
 	if r.StatusCode == 200 {

@@ -8,7 +8,7 @@ import (
 )
 
 func getAllQoSSubscriptions(cliCtx context.Context, afCtx *Context) (
-	[]AsSessionWithOoSSub, *http.Response, error) {
+	[] AsSessionWithQoSSub, *http.Response, error) {
 
 	cliCfg := NewConfiguration(afCtx)
 	cli := NewClient(cliCfg)

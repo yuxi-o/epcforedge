@@ -32,6 +32,7 @@ func ModifyQoSSubscriptionPatch(w http.ResponseWriter, r *http.Request) {
 		qsResp         AsSessionWithQoSSub
 		resp           *http.Response
 		subscriptionID string
+		qsRespJSON      []byte
 	)
 
 	afCtx := r.Context().Value(keyType("af-ctx")).(*Context)

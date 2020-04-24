@@ -5,7 +5,6 @@ package af
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -55,7 +54,7 @@ func (a *QoSSubscriptionGetAllAPIService) QoSSubscriptionsGetAll(
 	// create path and map variables
 	path := a.client.cfg.Protocol + "://" + a.client.cfg.NEFHostname +
 		a.client.cfg.NEFPort + a.client.cfg.NEFQoSBasePath + "/" +
-		afId +"/subscriptions"
+		afID +"/subscriptions"
 
 	headerParams := make(map[string]string)
 

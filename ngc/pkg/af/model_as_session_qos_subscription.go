@@ -24,7 +24,7 @@ type AsSessionWithQoSSub struct {
 	// string identifying mac address of UE
 	MacAddr MacAddr `json:"macAddr,omitempty"`
 	UsageThreshold UsageThreshold `json:"usageThreshold"`
-	SponsorInfo SponsorInfo `json:"sponsorInfo,omitempty"`
+	SponsorInfo SponsorInformation `json:"sponsorInfo,omitempty"`
 
 	// Set to true by the AF to request the NEF to send a test notification.
 	//Set to false or omitted otherwise.
