@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	oauth2 "github.com/open-ness/epcforedge/ngc/pkg/oauth2"
+	oauth2 "epcforedge/ngc/pkg/oauth2"
 )
 
 // Route : Structure which describes HTTP Request Handler type and other
@@ -132,6 +132,14 @@ var NEFRoutes = []Route{
 	},
 }
 
+// deal with QoS request
+type QoSHandler struct{}
+
+func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
+	log.Infof("NEF receive QoS [" + r.Method +"] request: " + r.URL.String())
+	w.WriteHeader(http.StatusOK)
+}
+
 type nefCtxKey string
 
 // NewNEFRouter : This function creates and initializes a NEF Router with all
@@ -164,6 +172,8 @@ func NewNEFRouter(nefCtx *nefContext) *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
+	router.PathPrefix("/3gpp-as-session-with-qos/v1/{scsAsId}/subscriptions").
+		Handler(QoSHandler{})
 
 	router.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	logtool "github.com/open-ness/common/log"
-	ngcnef "github.com/open-ness/epcforedge/ngc/pkg/nef"
+	ngcnef "epcforedge/ngc/pkg/nef"
 )
 
 // Log handler initialized. This is to be used for NEF Main

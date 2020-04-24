@@ -10,8 +10,8 @@ import (
 
 	"github.com/gorilla/handlers"
 	logger "github.com/open-ness/common/log"
-	config "github.com/open-ness/epcforedge/ngc/pkg/config"
-	oam "github.com/open-ness/epcforedge/ngc/pkg/oam"
+	config "epcforedge/ngc/pkg/config"
+	oam "epcforedge/ngc/pkg/oam"
 	"golang.org/x/net/http2"
 )
 
