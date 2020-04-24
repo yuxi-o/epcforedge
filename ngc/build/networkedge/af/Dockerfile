@@ -4,7 +4,7 @@
 FROM centos:7.6.1810
 
 RUN rm -rf /etc/yum.repos.d/*
-RUN cd /etc/yum.repos.d && curl -o CentOS-Base.repo "http://mirrors.aliyun.com/repo/Centos-7.r
+RUN cd /etc/yum.repos.d && curl -o CentOS-Base.repo "http://mirrors.aliyun.com/repo/Centos-7.repo"
 RUN cd /etc/yum.repos.d && curl -o epel.repo "http://mirrors.aliyun.com/repo/epel-7.repo"
 RUN yum clean all
 
