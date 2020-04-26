@@ -132,14 +132,6 @@ var NEFRoutes = []Route{
 	},
 }
 
-// deal with QoS request
-type QoSHandler struct{}
-
-func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
-	log.Infof("NEF receive QoS [" + r.Method +"] request: " + r.URL.String())
-	w.WriteHeader(http.StatusOK)
-}
-
 type nefCtxKey string
 
 // NewNEFRouter : This function creates and initializes a NEF Router with all

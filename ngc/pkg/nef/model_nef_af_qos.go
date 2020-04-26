@@ -1,5 +1,5 @@
 // CertusNet Copyright  
-package af
+package ngcnef
 
 // AsSessionWithQoSSub is  As Session with Qos Subscription structure
 type AsSessionWithQoSSub struct {
@@ -17,12 +17,12 @@ type AsSessionWithQoSSub struct {
 	QosReference string `json:"qosReference,omitempty"`
 	// string identifying a Ipv4 address formatted in the \"dotted decimal\"
 	//notation as defined in IETF RFC 1166.
-	UeIPv4Addr IPv4Addr `json:"ueIpv4Addr,omitempty"`
+	UeIPv4Addr Ipv4Addr `json:"ueIpv4Addr,omitempty"`
 	// string identifying a Ipv6 address formatted according to clause 4
 	// in IETF RFC 5952.
-	UeIPv6Addr IPv6Addr `json:"ueIpv6Addr,omitempty"`
+	UeIPv6Addr Ipv6Addr `json:"ueIpv6Addr,omitempty"`
 	// string identifying mac address of UE
-	MacAddr MacAddr `json:"macAddr,omitempty"`
+	MacAddr MacAddr48 `json:"macAddr,omitempty"`
 	UsageThreshold UsageThreshold `json:"usageThreshold,omitempty"`
 	SponsorInfo SponsorInformation `json:"sponsorInfo,omitempty"`
 
@@ -58,5 +58,5 @@ type AsSessionWithQoSSubPatch struct {
 	EthFlowInfo []EthFlowDescription `json:"ethFlowInfo,omitempty"`
 	// Identifies a pre-defined QoS information
 	QosReference string `json:"qosReference,omitempty"`
-	UsageThreshold UsageThreshold `json:"usageThreshold,omitempty"`
+	UsageThreshold UsageThreshold `json:"usageThreshold"`
 }
