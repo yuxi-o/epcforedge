@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2019 Intel Corporation
+
+---
+apiVersion: v1
+kind: "ngc_qos"
+policy:
+  self: ""
+  supportedFeatures: "string"
+  notificationDestination: "string"
+  qosReference: "string"
+  ueIpv4Addr: "100.100.0.100"
+  ueIpv6Addr: "string"
+  requestTestNotification: true
+  websockNotifConfig:
+    websocketUri: ''
+    requestWebsocketUri: true
+  flowInfo:
+    - flowId: 1000
+      flowDescriptions:
+      - "string"
+      - "string"

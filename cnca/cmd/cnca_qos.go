@@ -234,7 +234,7 @@ var qosGetCmd = &cobra.Command {
 				return
 			}
 
-			fmt.Println("[GET] Active AF QoS subscription:\n%s", string(sub))
+			fmt.Printf("[GET] Active AF QoS subscription:\n%s", string(sub))
 			return
 		} else if args[0] == "subscriptions" {
 			sub, err := qosGetSub("all")
