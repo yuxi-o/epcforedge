@@ -14,9 +14,10 @@ import (
 // deal with QoS request
 type QoSHandler struct{}
 
+const startSubID int = 1000
+const maxSubID int = 9999
+const numSubID int = maxSubID - startSubID + 1
 var fLocation bool = false
-var startSubID int = 1000
-var maxSubID int = 9999
 var fLoopbackSubID bool = false
 var incSubID int = startSubID
 var sID string
@@ -43,7 +44,6 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 		log.Infof("NEF QoS read body error")
 		return
 	}
-	log.Infof("Preset SubID: " + strconv.Itoa(incSubID))
 	log.Infof("request body: " + string(b))
 
 	switch r.Method {
@@ -125,31 +125,34 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 }
 
 func genSubID() (string, error){
+
+	if (incSubID > maxSubID) || (incSubID < startSubID) {
+		incSubID = startSubID
+	}
+
 	var id = incSubID
-	if (!fLoopbackSubID) && (incSubID <= maxSubID) {
+	log.Infof("Preset SubID: " + strconv.Itoa(incSubID))
+
+	lenSubID := len(mapSub)
+	if lenSubID >= (maxSubID - startSubID + 1) {
+		return "", errors.New("All QoS IDs are located!")
+	}
+
+	//for incSubID <= maxSubID {
+	for {
+		if _, ok := mapSub[strconv.Itoa(incSubID)]; !ok{
+			id = incSubID 
+			incSubID ++
+			return strconv.Itoa(id), nil
+		}
+
 		incSubID ++
-		if incSubID > maxSubID {
-			fLoopbackSubID = true
-		}
-		return strconv.Itoa(id), nil
-	} else {
-		lenSubID := len(mapSub)
-		if lenSubID == (maxSubID - startSubID + 1) {
-			return "", errors.New("All QoS IDs are located!")
-		}
 		if incSubID > maxSubID {
 			incSubID = startSubID
 		}
-		for incSubID <= maxSubID {
-			if _, ok := mapSub[strconv.Itoa(incSubID)]; !ok{
-				id = incSubID 
-				incSubID ++
-				return strconv.Itoa(id), nil
-			}
-			incSubID ++
-		} 
-
-		return "", errors.New("All QoS IDs are located!")
+		if incSubID == id { // loopback
+			return "", errors.New("No QoS ID is located!")
+		}
 	}
 }
 

@@ -165,7 +165,7 @@ func NewNEFRouter(nefCtx *nefContext) *mux.Router {
 			Handler(handler)
 	}
 	router.PathPrefix("/3gpp-as-session-with-qos/v1/{scsAsId}/subscriptions").
-		Handler(QoSHandler{})
+		Handler(nefRouteLogger(QoSHandler{}, "qosHandler"))
 
 	router.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
