@@ -29,6 +29,10 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 	log.Infof("NEF receive QoS [" + r.Method +"] request: " + r.URL.String())
 
 	var qsSub AsSessionWithQoSSub
+	var qsSubPatch AsSessionWithQoSSubPatch
+	var err error
+	var ok bool
+	var mdata []byte
 
 	surl := strings.Split(r.URL.String(), "subscriptions")
 	if surl[1] == "" { // endwith "subscriptions"
@@ -48,7 +52,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 
 	switch r.Method {
 		case "DELETE":
-			if _, ok := mapSub[sID]; ok {
+			if _, ok = mapSub[sID]; ok {
 				delete(mapSub, sID)
 				w.WriteHeader(http.StatusNoContent)
 			} else {
@@ -60,7 +64,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 				for _, v := range mapSub{
 					sliceSub = append(sliceSub, v)
 				}
-				mdata, err := json.Marshal(sliceSub)
+				mdata, err = json.Marshal(sliceSub)
 				if err != nil {
 					w.WriteHeader(http.StatusInternalServerError)
 				} else { 
@@ -69,7 +73,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 					w.Write(mdata)
 				}
 			} else if v, ok := mapSub[sID]; ok { // get sId sub
-				mdata, err := json.Marshal(v)
+				mdata, err = json.Marshal(v)
 				if err != nil {
 					w.WriteHeader(http.StatusInternalServerError)
 				} else { 
@@ -83,7 +87,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 		case "POST", "PUT", "PATCH":
 			if sID == "" && r.Method == "POST" {
 				fLocation = true
-				sID, err = genSubID()
+				sID, err = genQoSSubID()
 				if err != nil {
 					log.Err(err)
 					w.WriteHeader(http.StatusInternalServerError)
@@ -91,7 +95,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 				}
 			} else if (sID != "") && (r.Method == "PUT" || r.Method == "PATCH"){
 				fLocation = false
-				if  _, ok := mapSub[sID]; !ok {
+				if  qsSub, ok = mapSub[sID]; !ok {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
@@ -100,15 +104,24 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 				return
 			}
 
-			err := json.Unmarshal(b, &qsSub)
+			if r.Method == "PATCH" {
+				err = json.Unmarshal(b, &qsSubPatch)
+			} else {
+				err = json.Unmarshal(b, &qsSub)
+			}
 			if err != nil {
 				log.Err(err)
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
+
+			if r.Method == "PATCH" {
+				patchQoSSub(&qsSub, qsSubPatch)
+			}
+
 			qsSub.Self = Link(loc + sID)
 			mapSub[sID] = qsSub
-			mdata, err := json.Marshal(qsSub)
+			mdata, err = json.Marshal(qsSub)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 			} else { 
@@ -124,7 +137,7 @@ func (h QoSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func genSubID() (string, error){
+func genQoSSubID() (string, error){
 
 	if (incSubID > maxSubID) || (incSubID < startSubID) {
 		incSubID = startSubID
@@ -153,6 +166,25 @@ func genSubID() (string, error){
 		if incSubID == id { // loopback
 			return "", errors.New("No QoS ID is located!")
 		}
+	}
+}
+
+func patchQoSSub(q *AsSessionWithQoSSub, qp AsSessionWithQoSSubPatch){
+	if qp.FlowInfo != nil {
+		q.FlowInfo = qp.FlowInfo
+	}
+
+	if qp.EthFlowInfo != nil {
+		q.EthFlowInfo = qp.EthFlowInfo
+	}
+
+	if qp.QosReference != "" {
+		q.QosReference = qp.QosReference
+	}
+
+	var ut UsageThreshold = UsageThreshold{}
+	if qp.UsageThreshold != ut {
+		q.UsageThreshold = qp.UsageThreshold
 	}
 }
 
